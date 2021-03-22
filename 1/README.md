@@ -79,7 +79,8 @@ java -Xmx50m -classpath
 
 Надо поправить количество выделяемой памяти <br>
 
-> vim /etc/init.d/box <br>
+> vim /etc/init.d/box
+<br>
 
 ```
 JAVA_OPTS='-Xmx512m'
