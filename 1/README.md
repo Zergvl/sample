@@ -153,3 +153,87 @@ INSERT 0 1
 Перезагружаю веб-страничку.<br>
 ![screen](https://github.com/Zergvl/sample/blob/master/1/screenshots/1.JPG)
 <br><br>
+
+
+Костыльный Dockerfile <br>
+
+```
+FROM ecwid/ops-test-task:20210311a
+RUN  sed -i -r "s/8000/8082/g" /etc/nginx/sites-enabled/box.conf &&  sed -i -r "s/-Xmx50m/-Xmx512m/g" /etc/init.d/box &&  sed -i -r "s/peer/trust/g" /etc/postgresql/12/main/pg_hba.conf && service postgresql stop && service postgresql start
+COPY dump /opt/box/
+RUN service postgresql start &&  /usr/bin/psql -U postgres < /opt/box/dump
+
+EXPOSE 80/tcp
+CMD ["/startup"]
+```
+
+содержимое dump <br>
+
+```
+--
+-- PostgreSQL database cluster dump
+--
+
+CREATE ROLE box;
+ALTER ROLE box WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md5b2b8a3ca544e0a6d12c3300cf342ac0d';
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: box; Type: DATABASE; Schema: -; Owner: box
+--
+
+CREATE DATABASE box WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8';
+
+
+ALTER DATABASE box OWNER TO box;
+
+\connect box
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: devops; Type: TABLE; Schema: public; Owner: box
+--
+
+CREATE TABLE public.devops (
+    email character varying(100)
+);
+
+
+ALTER TABLE public.devops OWNER TO box;
+
+--
+-- Data for Name: devops; Type: TABLE DATA; Schema: public; Owner: box
+--
+
+COPY public.devops (email) FROM stdin;
+somemail@mail.com
+\.
+
+
+--
+-- PostgreSQL database cluster dump complete
+--
+```
