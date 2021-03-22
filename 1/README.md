@@ -1,5 +1,8 @@
-запускаю контейнер в фоновом режиме <br>
-docker run -d -p 3000:80 -it ecwid/ops-test-task:20210311a <br>
+Выполнение тестового задания [ ecwid.to/ops](https://hub.docker.com/r/ecwid/ops-test-task) <br> 
+<br>
+
+Запускаю контейнер в фоновом режиме <br>
+> docker run -d -p 3000:80 -it ecwid/ops-test-task:20210311a <br>
 <br>
 
 Проверка <br>
