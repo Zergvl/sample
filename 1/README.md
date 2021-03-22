@@ -22,12 +22,12 @@ docker run -d -p 3000:80 -it ecwid/ops-test-task:20210311a<br><br>
 > netstat -tlpen<br>
 
 <code>
-Active Internet connections (only servers)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode      PID/Program name
-tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      102        20901454   -
-tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      0          20897220   43/nginx: master pr
-tcp        0      0 127.0.0.1:8082          0.0.0.0:*               LISTEN      0          20901611   22/java
-tcp6       0      0 :::80                   :::*                    LISTEN      0          20897221   43/nginx: master pr
+Active Internet connections (only servers) <br>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode      PID/Program name <br>
+tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      102        20901454   - <br>
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      0          20897220   43/nginx: master pr <br>
+tcp        0      0 127.0.0.1:8082          0.0.0.0:*               LISTEN      0          20901611   22/java <br>
+tcp6       0      0 :::80                   :::*                    LISTEN      0          20897221   43/nginx: master pr <br>
 </code>
 <br><br>
 
@@ -50,8 +50,8 @@ proxy_pass http://localhost:8082;
 > less /var/log/box.log
 <br>
 </code>
-2021-03-22 03:05:44 ERROR box[nioEventLoopGroup-4-1] ktor.application: Unhandled: GET - /
-java.lang.OutOfMemoryError: Java heap space
+2021-03-22 03:05:44 ERROR box[nioEventLoopGroup-4-1] ktor.application: Unhandled: GET - / <br>
+java.lang.OutOfMemoryError: Java heap space 
 </code>
 <br><br>
 
@@ -88,17 +88,20 @@ JAVA_OPTS='-Xmx512m'
  > less /var/log/postgresql/postgresql-12-main.log <br>
 
 <code>
-2021-03-22 03:08:47.045 UTC [9861] box@box FATAL:  password authentication failed for user "box"
-2021-03-22 03:08:47.045 UTC [9861] box@box DETAIL:  Role "box" does not exist.
+2021-03-22 03:08:47.045 UTC [9861] box@box FATAL:  password authentication failed for user "box" <br>
+2021-03-22 03:08:47.045 UTC [9861] box@box DETAIL:  Role "box" does not exist. 
 </code>
 <br><br>
+
 Нет пользователя. Перед созданием правлю pg_hba.conf для доступа к СУБД. <br>
 
- > vim /etc/postgresql/12/main/pg_hba.conf
+> vim /etc/postgresql/12/main/pg_hba.conf
+
  <br>
 <code>
 local   all             postgres                                trust
 </code>
+
  <br>
  <br>
  
@@ -109,23 +112,24 @@ local   all             postgres                                trust
  
  > psql -U postgres
  <code>
-postgres=# create role box with login password 'iwwIEIeEiEDDecIEeIwC';
-CREATE ROLE
-postgres=# create database box;
-CREATE DATABASE
-postgres=# alter database box owner to box ;
+postgres=# create role box with login password 'iwwIEIeEiEDDecIEeIwC'; <br>
+CREATE ROLE <br>
+postgres=# create database box; <br>
+CREATE DATABASE <br>
+postgres=# alter database box owner to box ; <br>
 ALTER DATABASE
 </code>
  <br> <br>
+ 
 импорт "схемы" найденной в папке с приложением.  <br>
  > /opt/box# psql -U postgres box < schema.sql
 <br><br>
 
 Выдаю права на таблицу и добавляю в неё свой адрес: <br>
  <code>
-box=# alter table devops owner to box ;
-ALTER TABLE
-box=# insert into devops values ( 'zergnado@gmail.com' );
+box=# alter table devops owner to box ; <br>
+ALTER TABLE <br>
+box=# insert into devops values ( 'zergnado@gmail.com' ); <br>
 INSERT 0 1
 </code>
 <br><br>
