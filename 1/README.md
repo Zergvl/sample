@@ -2,17 +2,18 @@
 docker run -d -p 3000:80 -it ecwid/ops-test-task:20210311a<br><br>
 
 Проверка<br>
-curl -l http://localhost:3000<br>
+ > curl -l http://localhost:3000
+<br>
 
-<code>
-<html>
-<head><title>502 Bad Gateway</title></head>
-<body>
-<center><h1>502 Bad Gateway</h1></center>
-<hr><center>nginx/1.18.0 (Ubuntu)</center>
-</body>
-</html>
-</code>
+
+> <html>
+> <head><title>502 Bad Gateway</title></head>
+> <body>
+> <center><h1>502 Bad Gateway</h1></center>
+> <hr><center>nginx/1.18.0 (Ubuntu)</center>
+> </body>
+> </html>
+
 <br><br>
 
 Захожу в контейнер и смотрю что слушает сеть<br>
@@ -47,6 +48,7 @@ proxy_pass http://localhost:8082;
 
 Перезапускаю nginx, открываю страницу в браузере, но она не работает. В логах Nginx ошибок нет, смотрю лог приложения:
 > less /var/log/box.log
+<br>
 </code>
 2021-03-22 03:05:44 ERROR box[nioEventLoopGroup-4-1] ktor.application: Unhandled: GET - /
 java.lang.OutOfMemoryError: Java heap space
@@ -58,6 +60,7 @@ Java нехватает памяти, ищу как запускается пр�
 <code>
 java -Xmx50m -classpath
 </code>
+<br>
 <br>
 Надо поправить количество выделяемой памяти<br>
 
@@ -76,13 +79,15 @@ JAVA_OPTS='-Xmx512m'
  > less /var/log/box.log
  <br>
 <code>
-2021-03-22 03:51:31 WARN box[nioEventLoopGroup-4-4] ktor.application: Cannot get email from the database, see the response for details
+2021-03-22 03:08:47 WARN box[nioEventLoopGroup-4-4] ktor.application: Cannot get email from the database, see the response for details
 </code>
 <br><br>
 
-Не может прочитать адрес из БД. Помню что на 5432 висит postgresql, смотрю лог<br>
+Не может прочитать адрес из БД. Помню что на 5432 висит postgresql, смотрю лог <br>
 <code>
-less /var/log/postgresql/postgresql-12-main.log
+ > less /var/log/postgresql/postgresql-12-main.log <br>
+
+<code>
 2021-03-22 03:08:47.045 UTC [9861] box@box FATAL:  password authentication failed for user "box"
 2021-03-22 03:08:47.045 UTC [9861] box@box DETAIL:  Role "box" does not exist.
 </code>
