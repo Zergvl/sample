@@ -96,10 +96,12 @@ JAVA_OPTS='-Xmx512m'
 
  > vim /etc/postgresql/12/main/pg_hba.conf
  <br>
- <code>
+<code>
 local   all             postgres                                trust
 </code>
  <br>
+ <br>
+ 
 > service postgresql reload
  <br>
  
