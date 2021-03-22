@@ -76,6 +76,7 @@ java -Xmx50m -classpath
 
 <br>
 <br>
+
 Надо поправить количество выделяемой памяти <br>
 > vim /etc/init.d/box <br>
 
