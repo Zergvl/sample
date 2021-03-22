@@ -121,9 +121,9 @@ local   all             postgres                                trust
 ```
 
 <br>
-<br>
 
 > service postgresql reload <br>
+<br>
 
 Создаю пользователся и БД (box@box) с паролем из /etc/box.properties (конфиг указан в строке запуска приложения "ps" ) <br>
 > psql -U postgres <br>
