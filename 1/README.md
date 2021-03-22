@@ -84,7 +84,7 @@ JAVA_OPTS='-Xmx512m'
 <br><br>
 
 Не может прочитать адрес из БД. Помню что на 5432 висит postgresql, смотрю лог <br>
-<code>
+
  > less /var/log/postgresql/postgresql-12-main.log <br>
 
 <code>
