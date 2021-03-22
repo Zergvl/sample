@@ -61,18 +61,22 @@ java.lang.OutOfMemoryError: Java heap space
 
 Java нехватает памяти, ищу как запускается приложение<br>
 > ps axwwf | grep java <br>
+
 ```
 java -Xmx50m -classpath
 ```
+
 <br>
 <br>
 Надо поправить количество выделяемой памяти<br>
 
 > vim /etc/init.d/box
 <br>
+
 ```
 JAVA_OPTS='-Xmx512m'
 ```
+
 <br><br>
 Перезапускаю,  открывается страничка, ввожу "code" но получаю ошибку <br>
 
@@ -82,9 +86,11 @@ JAVA_OPTS='-Xmx512m'
 Смотрю лог приложения<br>
  > less /var/log/box.log
  <br>
+
 ```
 2021-03-22 03:08:47 WARN box[nioEventLoopGroup-4-4] ktor.application: Cannot get email from the database, see the response for details
 ```
+
 <br><br>
 
 Не может прочитать адрес из БД. Помню что на 5432 висит postgresql, смотрю лог <br>
@@ -95,6 +101,7 @@ JAVA_OPTS='-Xmx512m'
 2021-03-22 03:08:47.045 UTC [9861] box@box FATAL:  password authentication failed for user "box"
 2021-03-22 03:08:47.045 UTC [9861] box@box DETAIL:  Role "box" does not exist. 
 ```
+
 <br><br>
 
 Нет пользователя. Перед созданием правлю pg_hba.conf для доступа к СУБД. <br>
@@ -102,6 +109,7 @@ JAVA_OPTS='-Xmx512m'
 > vim /etc/postgresql/12/main/pg_hba.conf
 
  <br>
+
 ```
 local   all             postgres                                trust
 ```
@@ -115,6 +123,7 @@ local   all             postgres                                trust
  Создаю пользователся и БД (box@box) с паролем из /etc/box.properties (конфиг указан в строке запуска приложения "ps" )<br>
  
  > psql -U postgres
+
 ```
 postgres=# create role box with login password 'iwwIEIeEiEDDecIEeIwC';
 CREATE ROLE
@@ -123,6 +132,7 @@ CREATE DATABASE
 postgres=# alter database box owner to box ;
 ALTER DATABASE
 ```
+
  <br> <br>
  
 импорт "схемы" найденной в папке с приложением.  <br>
@@ -130,12 +140,14 @@ ALTER DATABASE
 <br><br>
 
 Выдаю права на таблицу и добавляю в неё свой адрес: <br>
+
 ```
 box=# alter table devops owner to box ;
 ALTER TABLE
 box=# insert into devops values ( 'zergnado@gmail.com' );
 INSERT 0 1
 ```
+
 <br><br>
 
 Перезагружаю веб-страничку.<br>
