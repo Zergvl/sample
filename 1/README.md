@@ -67,8 +67,10 @@ java -Xmx50m -classpath
 JAVA_OPTS='-Xmx512m'
 </code>
 <br><br>
-Перезапускаю,  открывается страничка, ввожу "code" но получаю ошибку<br>
-![screen](https://github.com/Zergvl/sample/blob/master/1/screenshots/0.JPG)
+Перезапускаю,  открывается страничка, ввожу "code" но получаю ошибку <br>
+
+![screen](https://github.com/Zergvl/sample/blob/master/1/screenshots/2.JPG)
+
 <br>
 Смотрю лог приложения<br>
  > less /var/log/box.log
