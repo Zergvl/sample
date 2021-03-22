@@ -2,7 +2,7 @@
 docker run -d -p 3000:80 -it ecwid/ops-test-task:20210311a<br><br>
 
 Проверка<br>
- > curl -l http://localhost:3000
+> curl -l http://localhost:3000
 <br>
 
 ```
@@ -83,9 +83,11 @@ JAVA_OPTS='-Xmx512m'
 ![screen](https://github.com/Zergvl/sample/blob/master/1/screenshots/2.JPG)
 
 <br>
-Смотрю лог приложения<br>
- > less /var/log/box.log
- <br>
+Смотрю лог приложения
+<br>
+
+> less /var/log/box.log
+<br>
 
 ```
 2021-03-22 03:08:47 WARN box[nioEventLoopGroup-4-4] ktor.application: Cannot get email from the database, see the response for details
@@ -95,7 +97,7 @@ JAVA_OPTS='-Xmx512m'
 
 Не может прочитать адрес из БД. Помню что на 5432 висит postgresql, смотрю лог <br>
 
- > less /var/log/postgresql/postgresql-12-main.log <br>
+> less /var/log/postgresql/postgresql-12-main.log <br>
 
 ```
 2021-03-22 03:08:47.045 UTC [9861] box@box FATAL:  password authentication failed for user "box"
@@ -108,21 +110,21 @@ JAVA_OPTS='-Xmx512m'
 
 > vim /etc/postgresql/12/main/pg_hba.conf
 
- <br>
+<br>
 
 ```
 local   all             postgres                                trust
 ```
 
- <br>
- <br>
- 
+<br>
+<br>
+
 > service postgresql reload
- <br>
- 
- Создаю пользователся и БД (box@box) с паролем из /etc/box.properties (конфиг указан в строке запуска приложения "ps" )<br>
- 
- > psql -U postgres
+<br>
+
+Создаю пользователся и БД (box@box) с паролем из /etc/box.properties (конфиг указан в строке запуска приложения "ps" )<br>
+
+> psql -U postgres
 
 ```
 postgres=# create role box with login password 'iwwIEIeEiEDDecIEeIwC';
@@ -155,7 +157,7 @@ INSERT 0 1
 <br><br>
 
 
-Костыльный Dockerfile <br>
+Костыльный [Dockerfile](https://github.com/Zergvl/sample/blob/master/1/Dockerfile) <br> 
 
 ```
 FROM ecwid/ops-test-task:20210311a
@@ -167,7 +169,7 @@ EXPOSE 80/tcp
 CMD ["/startup"]
 ```
 
-содержимое dump <br>
+содержимое [dump](https://github.com/Zergvl/sample/blob/master/1/dump) <br> 
 
 ```
 --
